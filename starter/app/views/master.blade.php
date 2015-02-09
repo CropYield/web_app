@@ -3,7 +3,7 @@
     <head>
         <title>
             @section('title')
-            Laravel 4.2 - Starter
+            CropYield WebApp
             @show
         </title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,6 +42,7 @@
                 <div class="collapse navbar-collapse">
                    <ul class="nav navbar-nav">
                         <li><a href="{{{ URL::to('') }}}">Home</a></li>
+                        <li><a href="{{{URL::to('help')}}}">Help</a></li>
                         @if ( Auth::guest() )
                             <li>{{ HTML::link('signin', 'Sign In') }}</li>
                             <li>{{ HTML::link('create', 'Create Account') }}</li>

@@ -22,6 +22,12 @@ Route::get('/signout', array(
 	)
 );
 
+Route::get('/help', array(
+	'as' => 'help',
+	'uses' => 'HelpController@helpHome'
+	)
+);	
+
 
 
 /* Un-authenticated users */

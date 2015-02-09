@@ -1,5 +1,5 @@
 <?php
-
+use Parse\ParseUser;
 class UserController extends BaseController {
 
 	public function getSignIn(){
@@ -41,8 +41,16 @@ class UserController extends BaseController {
 	        // Try to log the user in.
 	        if (Auth::attempt(array('email'=> $email, 'password'=> $password)))
 	        {
+	        	try {
+				  	$user = ParseUser::logIn($email, $password);
+				  // Do stuff after successful login.
+				  	return Redirect::to('')->with('success', 'You have logged in successfully');
+				} catch (ParseException $error) {
+				  // The login failed. Check error to see why.
+		            return Redirect::to('signin')->withErrors(array('password' => 'Login Failed'))->withInput(Input::except('password'));
+				}
 	            // Redirect to homepage
-	            return Redirect::to('')->with('success', 'You have logged in successfully');
+	            
 	        }
 	        else
 	        {
@@ -98,6 +106,28 @@ class UserController extends BaseController {
 		        // Try to log the user in.
 		        if (Auth::attempt(array('email'=> $email, 'password'=> $password)))
 		        {
+		        	$user = new ParseUser();
+					$user->set("username", $email);
+					$user->set("password", $password);
+					$user->set("email", $email);
+					try {
+					  $user->signUp();
+					} catch (ParseException $ex) {
+						 return Redirect::to('signin')->withErrors($ex->getMessage())->withInput(Input::except('password'));
+					  // error in $ex->getMessage();
+					}
+
+					// Login
+					try {
+					  $user = ParseUser::logIn($user, $password);
+					} catch(ParseException $ex) {
+						return Redirect::to('signin')->withErrors($ex->getMessage())->withInput(Input::except('password'));
+
+					  // error in $ex->getMessage();
+					}
+
+					// Current user
+					$user = ParseUser::getCurrentUser();
 		            // Redirect to homepage
 		            return Redirect::to('')->with('success', 'You have created your account successfully');
 		        }
@@ -114,6 +144,7 @@ class UserController extends BaseController {
     }
 
     public function getSignOut(){
+    	ParseUser::logOut();
     	Auth::logout();
 
     	return Redirect::to('')->with('success', 'You are logged out');

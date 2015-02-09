@@ -1,0 +1,49 @@
+<?php
+use Parse\ParseUser;
+class APIController extends BaseController {
+
+	public function postSignUpApp(){
+		
+		$username = $_POST('email');
+    	$email = $_POST('email');
+		$password = $_POST('password');
+
+		$validator = Validator::make(
+			array(
+				'email' => $email,
+				'password' => $password
+			), 
+			array(
+				'email' => 'required|email|unique:users',
+				'password' => 'required|min:8'
+			)
+		);
+
+		if($validator->passes()){
+
+			$user = User::create( array(
+					'username' => $username,
+					'email' 	=> $email,
+					'password'	=> Hash::make($password)
+				)
+			);
+
+			if($user){
+
+		        // Try to log the user in.
+		        return Response::json(array(
+			        'error' => false,
+			        'message' => 'User Added'),
+			        200
+		        );
+	    	} else {
+	    		return Response::json(array(
+			        'error' => true,
+			        'message' => 'Error Adding User'
+		        );
+	    	}
+	}
+
+}
+
+	

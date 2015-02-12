@@ -2,8 +2,8 @@
 use Parse\ParseUser;
 class APIController extends BaseController {
 
-	public function postSignUpApp(){
-		
+	public function postSignUpApp($key){
+
 		$username = $_POST('email');
     	$email = $_POST('email');
 		$password = $_POST('password');

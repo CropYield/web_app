@@ -110,6 +110,7 @@ class UserController extends BaseController {
 					$user->set("username", $email);
 					$user->set("password", $password);
 					$user->set("email", $email);
+					
 					try {
 					  $user->signUp();
 					} catch (ParseException $ex) {

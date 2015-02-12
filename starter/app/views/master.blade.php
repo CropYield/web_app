@@ -36,7 +36,7 @@
                         <span class="icon-bar"></span>
                     </button>
 
-                    <a class="navbar-brand" href="">Laravel Starter</a>
+                    <a class="navbar-brand" href="">CropYield</a>
                 </div>
                 <!-- Everything you want hidden at 940px or less, place within here -->
                 <div class="collapse navbar-collapse">

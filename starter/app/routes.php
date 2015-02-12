@@ -28,6 +28,10 @@ Route::get('/help', array(
 	)
 );	
 
+Route::get('api/{key}/signup', array(
+	'as' => 'api-signup',
+	'uses' => 'APIController@postSignUpApp')
+);
 
 
 /* Un-authenticated users */

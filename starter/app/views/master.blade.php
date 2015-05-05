@@ -20,8 +20,8 @@
                 }
             @show
         </style>
-       
-        
+
+
     </head>
 
     <body>
@@ -47,14 +47,15 @@
                             <li>{{ HTML::link('signin', 'Sign In') }}</li>
                             <li>{{ HTML::link('create', 'Create Account') }}</li>
                         @else
+                            <li>{{ HTML::link('history', 'History') }}</li>
                             <li>{{ HTML::link('signout', 'Sign Out') }}</li>
                         @endif
-                    </ul> 
+                    </ul>
                 </div>
 
-                
+
             </div>
-        </div> 
+        </div>
 
         <!-- Container -->
         <div class="container">

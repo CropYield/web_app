@@ -26,11 +26,16 @@ Route::get('/help', array(
 	'as' => 'help',
 	'uses' => 'HelpController@helpHome'
 	)
-);	
+);
 
-Route::get('api/{key}/signup', array(
+Route::get('/api/{key}/signup', array(
 	'as' => 'api-signup',
 	'uses' => 'APIController@postSignUpApp')
+);
+
+Route::get('/history', array(
+	'as' => 'history',
+	'uses' => 'HistoryController@getHistory')
 );
 
 

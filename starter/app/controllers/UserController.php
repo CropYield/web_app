@@ -19,7 +19,7 @@ class UserController extends BaseController {
     {
         // Get all the inputs
         // id is used for login, username is used for validation to return correct error-strings
-       
+
 
         $email = Input::get('email');
 		$password = Input::get('password');
@@ -28,7 +28,7 @@ class UserController extends BaseController {
 			array(
 				'email' => $email,
 				'password' => $password
-			), 
+			),
 			array(
 				'email' => 'required|email',
 				'password' => 'required|min:8'
@@ -50,7 +50,7 @@ class UserController extends BaseController {
 		            return Redirect::to('signin')->withErrors(array('password' => 'Login Failed'))->withInput(Input::except('password'));
 				}
 	            // Redirect to homepage
-	            
+
 	        }
 	        else
 	        {
@@ -58,7 +58,7 @@ class UserController extends BaseController {
 	            return Redirect::to('signin')->withErrors(array('password' => 'Password invalid'))->withInput(Input::except('password'));
 	        }
 	    }
-	        
+
 
         // Something went wrong.
         return Redirect::to('signin')->withErrors($validator)->withInput(Input::except('password'));
@@ -76,21 +76,21 @@ class UserController extends BaseController {
     public function postCreate(){
     	$username = Input::get('username');
     	$email = Input::get('email');
-		$password = Input::get('password');
-		$password_confirm = Input::get('password_confirm');
+			$password = Input::get('password');
+			$password_confirm = Input::get('password_confirm');
 
-		$validator = Validator::make(
-			array(
-				'email' => $email,
-				'password' => $password,
-				'password_confirm' => $password_confirm
-			), 
-			array(
-				'email' => 'required|email|unique:users',
-				'password' => 'required|min:8',
-				'password_confirm' => 'required|same:password'
-			)
-		);
+				$validator = Validator::make(
+				array(
+					'email' => $email,
+					'password' => $password,
+					'password_confirm' => $password_confirm
+				),
+				array(
+					'email' => 'required|email|unique:users',
+					'password' => 'required|min:8',
+					'password_confirm' => 'required|same:password'
+				)
+			);
 
 		if($validator->passes()){
 
@@ -110,7 +110,7 @@ class UserController extends BaseController {
 					$user->set("username", $email);
 					$user->set("password", $password);
 					$user->set("email", $email);
-					
+
 					try {
 					  $user->signUp();
 					} catch (ParseException $ex) {
@@ -120,7 +120,7 @@ class UserController extends BaseController {
 
 					// Login
 					try {
-					  $user = ParseUser::logIn($user, $password);
+					  $user = ParseUser::logIn($user->username, $password);
 					} catch(ParseException $ex) {
 						return Redirect::to('signin')->withErrors($ex->getMessage())->withInput(Input::except('password'));
 

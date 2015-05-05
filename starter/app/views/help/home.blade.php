@@ -10,7 +10,7 @@
     @if ($errors->has())
         <div id="errors" class="alert alert-danger">
             @foreach ($errors->all() as $error)
-                {{ $error }}<br>        
+                {{ $error }}<br>
             @endforeach
         </div>
       @endif
@@ -19,10 +19,11 @@
     </div>
     <div class="jumbotron">
       <ul>
-        <li>Help With App</li>
-        <li>Help With Dashboard</li>
-        <li>For Users</li>
-        <li>For Researchers</li>
+        <li>Still waiting on input from client...</li>
+        <li>Still waiting on input from client...</li>
+        <li>Still waiting on input from client...</li>
+        <li>Still waiting on input from client...</li>
+        <li><a href="">Download will go here.</a></li>
       </ul>
     </div>
 

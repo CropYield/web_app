@@ -107,41 +107,52 @@ class UserController extends BaseController {
 		        if (Auth::attempt(array('email'=> $email, 'password'=> $password)))
 		        {
 		        	$user = new ParseUser();
-					$user->set("username", $email);
-					$user->set("password", $password);
-					$user->set("email", $email);
+							$user->set("username", $email);
+							$user->set("password", $password);
+							$user->set("email", $email);
 
-					try {
-					  $user->signUp();
-					} catch (ParseException $ex) {
-						 return Redirect::to('signin')->withErrors($ex->getMessage())->withInput(Input::except('password'));
-					  // error in $ex->getMessage();
-					}
+							try {
+							  $user->signUp();
+							} catch (ParseException $ex) {
+								 //return Redirect::to('signin')->withErrors($ex->getMessage())->withInput(Input::except('password'));
+							  // error in $ex->getMessage();
 
-					// Login
-					try {
-					  $user = ParseUser::logIn($user->username, $password);
-					} catch(ParseException $ex) {
-						return Redirect::to('signin')->withErrors($ex->getMessage())->withInput(Input::except('password'));
+								echo var_dump($locUser);
+								echo var_dump($user);
+							}
 
-					  // error in $ex->getMessage();
-					}
+							// Login
+							try {
+							  $user = ParseUser::logIn($user->username, $password);
+							} catch(ParseException $ex) {
+								//return Redirect::to('signin')->withErrors($ex->getMessage())->withInput(Input::except('password'));
+								echo var_dump($locUser);
+								echo var_dump($user);
+							  // error in $ex->getMessage();
+							}
 
-					// Current user
-					$user = ParseUser::getCurrentUser();
-		            // Redirect to homepage
-		            return Redirect::to('')->with('success', 'You have created your account successfully');
+							// Current user
+							$locUser = Auth::user();
+							$locUser->object_id = $user->object_id;
+							$locUser->save();
+							echo var_dump($locUser);
+							echo var_dump($user);
+				            // Redirect to homepage
+		            //return Redirect::to('')->with('success', 'You have created your account successfully');
 		        }
 		        else
 		        {
 		            // Redirect to the login page.
-		            return Redirect::to('create')->withErrors(array('password' => 'Password invalid'))->withInput(Input::except('password'));
+		           // return Redirect::to('create')->withErrors(array('password' => 'Password invalid'))->withInput(Input::except('password'));
+							echo var_dump($locUser);
+							echo var_dump($user);
 		        }
 	    	}
 	    }
 
-	    return Redirect::to('create')->withErrors($validator)->withInput(Input::except('password'));
-
+	    //return Redirect::to('create')->withErrors($validator)->withInput(Input::except('password'));
+			echo var_dump($locUser);
+			echo var_dump($user);
     }
 
     public function getSignOut(){
